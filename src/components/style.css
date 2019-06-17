@@ -1,0 +1,17 @@
+@tailwind base;
+
+body {
+    @apply bg-orange-400;
+}
+
+.pacifico {
+    font-family: 'Pacifico', cursive;
+}
+
+p {
+    @apply mb-2;
+}
+
+@tailwind components;
+
+@tailwind utilities;

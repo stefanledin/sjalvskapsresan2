@@ -1,21 +1,41 @@
 import React from "react"
-import { Link } from "gatsby"
+import '../components/style.css';
+import Article from '../components/article';
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
-
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
+const IndexPage = ( { data } ) => {
+  return (
+    <div className="relative">
+      <aside className="m-4 w-3/12 inset-y-0 z-1 absolute">
+        <div className="bg-orange-200 shadow rounded-lg">
+          <h2 className="m-2 pacifico text-3xl text-red-700"><span role="img">🇸🇪</span> Karlskrona</h2>
+        </div>
+      </aside>
+      <main className="container mx-auto">
+        {data.allWordpressPost.edges.map(({node}) => (
+          <h2 className="m-2 pacifico text-3xl text-red-700" key={node.id}><a href={`/${node.slug}`}>{node.title}</a></h2>
+        ))}
+        <header className="text-center">
+          <h1 className="mb-6 text-4xl pacifico text-red-700">Självskapsresan 2(019)</h1>
+        </header>
+        <Article />
+      </main>
     </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+  )
+}
 
 export default IndexPage
+
+export const pageQuery = graphql`
+  query {
+    allWordpressPost(sort: {order: ASC, fields: date}) {
+      edges {
+        node {
+          id
+          title
+          date
+          slug
+        }
+      }
+    }
+  }
+`
