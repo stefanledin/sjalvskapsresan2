@@ -4,7 +4,7 @@ export default class Sidebar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            currentCategory: null
+            currentCategories: []
         }
     }
 
@@ -27,11 +27,16 @@ export default class Sidebar extends React.Component {
     }
 
     setCurrentCategory(index, event) {
-        if (this.state.currentCategory === index) {
-            index = null;
+        let currentCategories = this.state.currentCategories;
+
+        if (currentCategories.indexOf(index) !== -1) {
+            currentCategories = currentCategories.filter(category => category !== index);
+        } else {
+            currentCategories.push(index);
         }
+
         this.setState({
-            currentCategory: index
+            currentCategories
         })
     }
 
@@ -39,15 +44,20 @@ export default class Sidebar extends React.Component {
         
         return this.groupPostByCategory().map((group, index) => {
             const postList = group.posts.map(post => (
-                <li key={post.id} className="m-2 pacifico text-3xl text-red-700">
-                    <a href={`/${post.slug}`}>{post.title}</a>
+                <li key={post.id} className="py-2 pl-4 bg-orange-300 hover:bg-orange-700">
+                    <a href={`/${post.slug}`} className="block">
+                        <span className="block text-sm">{post.date}</span>
+                        <span className="pacifico text-2xl text-red-700">{post.title}</span>
+                    </a>
                 </li>
             ));
-            const plask = this.state.currentCategory === index ? 'bg-orange-300' : '';
+
+            const currentClasses = this.state.currentCategories.indexOf(index) !== -1 ? 'bg-orange-400' : '';
+
             return (
-                <li key={index} className={plask + ' pacifico text-3xl text-red-700'}>
-                    <span onClick={(e) => this.setCurrentCategory(index, e)} className="p-2 cursor-pointer block">{group.category.name}</span>
-                    {this.state.currentCategory === index &&
+                <li key={index} className={currentClasses}>
+                    <span onClick={(e) => this.setCurrentCategory(index, e)} className="p-2 cursor-pointer block pacifico text-3xl text-red-700">{group.category.name}</span>
+                    {this.state.currentCategories.indexOf(index) !== -1 &&
                         <ul>
                             {postList}
                         </ul>
