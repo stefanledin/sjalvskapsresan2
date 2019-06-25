@@ -8,7 +8,9 @@ const IndexPage = ( { data } ) => {
     <div className="relative">
       <aside className="m-4 w-3/12 inset-y-0 z-1 absolute">
         <div className="bg-orange-200 shadow rounded-lg">
-          <Sidebar posts={data.allWordpressPost.edges} />
+          <ul>
+            <Sidebar posts={data.allWordpressPost.edges} />
+          </ul>
         </div>
       </aside>
       <main className="container mx-auto">
@@ -36,6 +38,7 @@ export const pageQuery = graphql`
           slug
           categories {
             name
+            id
           }
         }
       }
