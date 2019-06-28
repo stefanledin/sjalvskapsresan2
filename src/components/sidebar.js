@@ -1,4 +1,5 @@
 import React from 'react';
+import Img from 'gatsby-image';
 
 export default class Sidebar extends React.Component {
     constructor(props) {
@@ -44,21 +45,33 @@ export default class Sidebar extends React.Component {
         
         return this.groupPostByCategory().map((group, index) => {
             const postList = group.posts.map(post => (
-                <li key={post.id} className="py-2 pl-4 bg-orange-300 hover:bg-orange-700">
-                    <a href={`/${post.slug}`} className="block">
-                        <span className="block text-sm">{post.date}</span>
-                        <span className="pacifico text-2xl text-red-700">{post.title}</span>
-                    </a>
+                <li key={post.id} className="p-0 w-full">
+                    <div className="bg-orange-100">
+                        <a href={`/${post.slug}`} className="block flex">
+                            {post.featured_media &&
+                                <Img fluid={post.featured_media.localFile.childImageSharp.fluid} backgroundColor="yellow" />
+                            }
+                            <div className="p-4">
+                                <span className="block text-sm">{post.date}</span>
+                                <span className="pacifico text-2xl text-red-700">{post.title}</span>
+                            </div>
+                        </a>
+                    </div>
                 </li>
             ));
 
-            const currentClasses = this.state.currentCategories.indexOf(index) !== -1 ? 'bg-orange-400' : '';
+            const isCurrent = this.state.currentCategories.indexOf(index) !== -1;
+            const currentLiClasses = isCurrent ? 'border-orange-300' : '';
+            const currentSpanClasses = isCurrent ? 'bg-orange-200 hover:bg-orange-300' : '';
 
             return (
-                <li key={index} className={currentClasses}>
-                    <span onClick={(e) => this.setCurrentCategory(index, e)} className="p-2 cursor-pointer block pacifico text-3xl text-red-700">{group.category.name}</span>
+                <li key={index} className={'my-6 border-orange-200 border hover:border-t-2 ' + currentLiClasses}>
+                    <span onClick={(e) => this.setCurrentCategory(index, e)} className={currentSpanClasses + ' p-2 pl-4 cursor-pointer block pacifico text-3xl text-red-700'}>{group.category.name}</span>
+                    <ul className="hidden">
+                        {postList}
+                    </ul>
                     {this.state.currentCategories.indexOf(index) !== -1 &&
-                        <ul>
+                        <ul className="m-0 list-none flex flex-wrap">
                             {postList}
                         </ul>
                     }

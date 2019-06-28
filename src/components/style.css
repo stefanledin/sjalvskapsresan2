@@ -1,15 +1,70 @@
 @tailwind base;
 
 body {
-    @apply bg-orange-400;
+    @apply bg-orange-100;
 }
 
 .pacifico {
     font-family: 'Pacifico', cursive;
 }
 
-p {
-    @apply mb-2;
+h2 {
+    @apply pacifico;
+    @apply text-red-700;
+    @apply text-3xl;
+}
+
+h3 {
+    @apply text-xl;
+}
+
+article p {
+    @apply mb-4;
+}
+
+a, a:visited {
+    @apply text-orange-500;
+}
+
+a:hover {
+    @apply text-red-600;
+}
+
+img {
+    @apply mx-auto;
+    @apply mb-4;
+    display: block;
+}
+
+ul {
+    @apply list-disc;
+    @apply list-inside;
+    @apply mb-4;
+    @apply ml-4
+}
+
+.post__caption {
+    @apply mb-4;
+    @apply text-gray-600;
+    @apply text-sm;
+    text-align: center;
+    display: block;
+}
+
+.post__embed {
+    @apply mb-4;
+    position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+    height: 0;
+    overflow: hidden;
+}
+.post__embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 @tailwind components;

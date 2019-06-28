@@ -9,28 +9,30 @@ const IndexPage = ( { data } ) => {
 
     return (
         <div className="relative">
-        <aside className="m-4 w-3/12 inset-y-0 z-1 absolute">
-            <div className="bg-orange-200 shadow rounded-lg">
-            <ul>
-                <Sidebar posts={data.allWordpressPost.edges} />
-            </ul>
-            </div>
-        </aside>
-        <main className="container-fluid mx-auto">
-            <header className="text-center">
-            <h1 className="mb-6 text-4xl pacifico text-red-700">Självskapsresan 2(019)</h1>
-            </header>
-            <article className="bg-white mb-6 shadow-lg w-9/12 mx-auto">
-                {thumbnail &&
-                    <Img fluid={thumbnail.localFile.childImageSharp.fluid} backgroundColor="yellow" />
-                }
-                <div className="p-6">
-                    <span className="pacifico text-2xl text-orange-500 text-center block">Dag 6: München</span>
-                    <h1 className="mb-6 text-5xl pacifico text-red-600 text-center">{post.title}</h1>
-                    <div className="pt-4 pb-4 mx-auto w-9/12" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <aside className="m-0 w-3/4 inset-y-0 z-20 absolute bg-orange-100 rounded-r-lg -shadow-xl -border-l-4 border-orange-300">
+                <div className="mx-4 bg-orange-2000 overflow-hidden">
+                    <ul className="list-none">
+                        <Sidebar posts={data.allWordpressPost.edges} />
+                    </ul>
                 </div>
-            </article>
-        </main>
+            </aside>
+            <div className="fixed inset-0 bg-black z-10 opacity-75"></div>
+            <main className="container mx-auto mb-6 bg-orange-300 overflow-hidden shadow-md">
+                <header className="text-center">
+                    <h1 className="mt-2 mb-6 text-3xl sm:text-4xl lg:text-5xl pacifico text-red-700">Självskapsresan 2</h1>
+                </header>
+                <article className="bg-white mb-6 w-11/12 mx-auto">
+                    {thumbnail &&
+                        <Img fluid={thumbnail.localFile.childImageSharp.fluid} backgroundColor="yellow" />
+                    }
+                    <div className="mx-auto py-4 lg:py-6 w-11/12 lg:w-10/12 xl:w-8/12">
+                        <span className="mb-1 pacifico text-2xl text-orange-500 text-center block">{post.acf.sub_heading}</span>
+                        <h1 className="mb-5 text-4xl sm:text-5xl lg:text-6xl pacifico text-red-600 text-center">{post.title}</h1>
+                        <span className="mb-0 text-gray-600 block text-left text-sm">{post.date}</span>
+                        <div className="mx-auto " dangerouslySetInnerHTML={{ __html: post.content }} />
+                    </div>
+                </article>
+            </main>
         </div>
     )
 }
@@ -44,7 +46,7 @@ export const pageQuery = graphql`
         node {
           id
           title
-          date
+          date(formatString: "HH:mm, ddd DD MMMM", locale: "sv-SE")
           slug
           featured_media {
             localFile {
@@ -77,7 +79,10 @@ export const pageQuery = graphql`
         id
         title
         content
-        date
+        date(formatString: "HH:mm, ddd DD MMMM", locale: "sv-SE")
+        acf {
+          sub_heading
+        }
         featured_media {
             localFile {
                 childImageSharp {
