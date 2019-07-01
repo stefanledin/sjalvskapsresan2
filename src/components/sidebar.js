@@ -46,17 +46,21 @@ export default class Sidebar extends React.Component {
         
         return this.groupPostByCategory().map((group, index) => {
             const postList = group.posts.map(post => (
-                <li key={post.id} className="p-0 w-full ">
+                <li key={post.id} className="m-0 p-0 w-full flex border-b border-orange-300">
                     <Link 
                         to={`/${post.slug}`} 
                         activeClassName="border-orange-700 active"
-                        className="block flex border-l-2 border-transparent hover:border-orange-700">
-                            {post.featured_media &&
-                                <Img fluid={post.featured_media.localFile.childImageSharp.fluid} backgroundColor="yellow" />
-                            }
-                            <div className="p-4">
-                                <span className="block text-sm">{post.date}</span>
-                                <span className="pacifico text-2xl text-red-700">{post.title}</span>
+                        className="p-4 flex flex-row-reverse w-full border-l-4 border-transparent hover:border-red-600">
+                            <div className="w-2/4">
+                                {post.featured_media &&
+                                    <Img fluid={post.featured_media.localFile.childImageSharp.fluid} />
+                                }
+                            </div>
+                            <div className="w-2/4">
+                                <div className="px-4">
+                                    <span className="block text-sm">{post.date}</span>
+                                    <span className="pacifico text-3xl">{post.title}</span>
+                                </div>
                             </div>
                     </Link>
                 </li>
@@ -73,9 +77,6 @@ export default class Sidebar extends React.Component {
                         className={currentSpanClasses + ' p-2 pl-4 cursor-pointer block pacifico text-3xl text-red-700'}>
                         {group.category.name}
                     </span>
-                    <ul className="hidden">
-                        {postList}
-                    </ul>
                     {this.state.currentCategories.indexOf(index) !== -1 &&
                         <ul className="m-0 list-none flex flex-wrap">
                             {postList}
