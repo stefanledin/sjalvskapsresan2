@@ -1,37 +1,28 @@
 import React from "react"
 import './components/style.css';
 import Sidebar from './components/sidebar';
-import Img from 'gatsby-image';
+import Article from './components/article';
 
 const IndexPage = ( { data } ) => {
     const post = data.wordpressPost;
-    const thumbnail = post.featured_media;
 
     return (
-        <div className="relative">
-            <aside className="m-0 w-3/4 inset-y-0 z-20 absolute bg-orange-100 rounded-r-lg -shadow-xl -border-l-4 border-orange-300">
+        <div className="container mx-auto flex shadow-lg bg-orange-100 mb-6">
+            <aside className="m-0 w-1/4 -inset-y-0 z-20 absolute bg-orange-100 rounded-r-lg">
                 <div className="mx-4 bg-orange-2000 overflow-hidden">
-                    <ul className="list-none">
+                    <ul className="m-0 list-none -border-l-2 -border-orange-700">
                         <Sidebar posts={data.allWordpressPost.edges} />
                     </ul>
                 </div>
             </aside>
-            <div className="fixed inset-0 bg-black z-10 opacity-75"></div>
-            <main className="container mx-auto mb-6 bg-orange-300 overflow-hidden shadow-md">
+
+            <main className="w-11/12 mx-auto mb-6 -bg-orange-200 overflow-hidden -shadow-md">
                 <header className="text-center">
-                    <h1 className="mt-2 mb-6 text-3xl sm:text-4xl lg:text-5xl pacifico text-red-700">Självskapsresan 2</h1>
+                    <h1 className="mt-2 mb-6 text-3xl sm:text-4xl lg:text-5xl pacifico text-red-700 leading-none">
+                      Självskapsresan 2 <br /><span className="mt-4 block text-lg md:text-xl text-orange-700">...eller finns det svenskt kaffe på tåget?</span>
+                    </h1>
                 </header>
-                <article className="bg-white mb-6 w-11/12 mx-auto">
-                    {thumbnail &&
-                        <Img fluid={thumbnail.localFile.childImageSharp.fluid} backgroundColor="yellow" />
-                    }
-                    <div className="mx-auto py-4 lg:py-6 w-11/12 lg:w-10/12 xl:w-8/12">
-                        <span className="mb-1 pacifico text-2xl text-orange-500 text-center block">{post.acf.sub_heading}</span>
-                        <h1 className="mb-5 text-4xl sm:text-5xl lg:text-6xl pacifico text-red-600 text-center">{post.title}</h1>
-                        <span className="mb-0 text-gray-600 block text-left text-sm">{post.date}</span>
-                        <div className="mx-auto " dangerouslySetInnerHTML={{ __html: post.content }} />
-                    </div>
-                </article>
+                <Article post={post} />
             </main>
         </div>
     )

@@ -1,7 +1,7 @@
 @tailwind base;
 
 body {
-    @apply bg-orange-100;
+    @apply bg-orange-200;
 }
 
 .pacifico {
