@@ -14,7 +14,7 @@ export default class Sidebar extends React.Component {
         let currentCategory = null;
         let postsGroupedByCategory = [];
     
-        this.props.posts.map(({node}) => {
+        this.props.posts.forEach(({node}) => {
             if (currentCategory !== node.categories[0].name) {
                 postsGroupedByCategory.push({
                     category: node.categories[0],
@@ -43,13 +43,13 @@ export default class Sidebar extends React.Component {
     }
 
     render() {
-        
         return this.groupPostByCategory().map((group, index) => {
             const postList = group.posts.map(post => (
                 <li key={post.id} className="m-0 p-0 w-full flex border-b border-orange-300">
                     <Link 
                         to={`/${post.slug}`} 
                         activeClassName="border-orange-700 active"
+                        onClick={this.props.onNavigation}
                         className="p-4 flex flex-row-reverse w-full border-l-4 border-transparent hover:border-red-600">
                             <div className="w-2/4">
                                 {post.featured_media &&
