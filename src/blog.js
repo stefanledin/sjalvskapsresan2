@@ -8,15 +8,17 @@ const IndexPage = ( {data} ) => {
     const [navIsOpen, toggleNav] = useState(false);
     const post = data.wordpressPost;
 
-    const props = useSpring({
-        from: {translateX: '-100%'},
-        to: {translateX: '0'}
+    const asideAnimation = useSpring({
+        transform: navIsOpen ? 'translateX(0%)' : 'translateX(-100%)'
+    })
+    const overlayAnimation = useSpring({
+        opacity: navIsOpen ? 0.75 : 0
     })
 
     return (
         <div className="container mx-auto flex shadow-lg bg-orange-100 mb-6 relative overflow-hidden">
             
-            <animated.aside style={props} className="m-0 w-2/3 inset-y-0 z-20 absolute bg-orange-100">
+            <animated.aside style={asideAnimation} className="m-0 w-2/3 inset-y-0 z-20 absolute bg-orange-100 overflow-auto">
                 <div className="mx-4 bg-orange-2000 overflow-hidden">
                     <ul className="m-0 list-none">
                         <Sidebar 
@@ -27,7 +29,9 @@ const IndexPage = ( {data} ) => {
                 </div>
             </animated.aside>
             
-            <animated.div style={props} className="absolute z-10 inset-0 bg-black opacity-0" onClick={() => toggleNav(true)}></animated.div>
+            {navIsOpen &&
+                <animated.div style={overlayAnimation} className="absolute z-10 inset-0 bg-black" onClick={() => toggleNav(false)}></animated.div>
+            }
 
             <main className="w-11/12 mx-auto mb-6 -bg-orange-200 overflow-hidden -shadow-md relative">
                 <header className="text-center">
