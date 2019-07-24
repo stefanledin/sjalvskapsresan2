@@ -52,7 +52,7 @@ export default class Sidebar extends React.Component {
                         onClick={this.props.onNavigation}
                         className="p-4 flex flex-col md:flex-row-reverse w-full border-l-4 border-transparent hover:border-red-600">
                             <div className="w-full md:w-2/4">
-                                {post.featured_media &&
+                                {post.featured_media && post.featured_media.localFile &&
                                     <Img fluid={post.featured_media.localFile.childImageSharp.fluid} />
                                 }
                             </div>
