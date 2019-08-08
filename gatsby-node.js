@@ -29,7 +29,7 @@ exports.createPages = async ({graphql, actions}) => {
     const latest = result.data.allWordpressPost.edges[0];
     createPage({
         path: '/',
-        component: path.resolve('./src/blog.js'),
+        component: path.resolve('./src/index.js'),
         context: {
             id: latest.node.id,
             slug: latest.node.slug
@@ -39,7 +39,7 @@ exports.createPages = async ({graphql, actions}) => {
     result.data.allWordpressPost.edges.forEach(({node}) => {
         createPage({
             path: `/${node.slug}/`,
-            component: path.resolve('./src/blog.js'),
+            component: path.resolve('./src/single.js'),
             context: {
                 id: node.id,
                 slug: node.slug

@@ -9,22 +9,29 @@ export default class Counter extends React.Component {
         this.state = {
             timer: null
         }
-
+        
         this.departure = moment('2019-07-24 08:09');
-
+        this.arrival = moment('2019-08-03 13:46');
+        
         setInterval(this.countdown.bind(this), 1000);
     }
 
     countdown() {
         let diff = moment.duration(this.departure.diff(moment()));
 
-        if (this.hasDepartured(diff)) {
-            diff = moment.duration(moment().diff(this.departure))._data;
+        if (this.arrival.diff(moment() > 0)) {
+            
+            if (this.hasDepartured(diff)) {
+                diff = moment.duration(moment().diff(this.departure))._data;
+            } else {
+                diff = diff._data;
+            }
+            this.setState({timer: this.diffAsHTML(diff)});
+        
         } else {
-            diff = diff._data;
+            this.setState({timer: this.diffAsHTML(moment.duration(this.arrival.diff(this.departure))._data)});
         }
 
-        this.setState({timer: this.diffAsHTML(diff)});
     }
 
     hasDepartured(diff) {

@@ -3,12 +3,6 @@ import Img from 'gatsby-image';
 import { Link } from "gatsby";
 
 export default class Sidebar extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            currentCategories: []
-        }
-    }
 
     groupPostByCategory() {
         let currentCategory = null;
@@ -45,44 +39,36 @@ export default class Sidebar extends React.Component {
     render() {
         return this.groupPostByCategory().map((group, index) => {
             const postList = group.posts.map(post => (
-                <li key={post.id} className="m-0 p-0 w-full flex border-b border-orange-300">
+                <div key={post.id} className="m-0 p-0 w-full md:w-2/4 xl:w-1/3 flex mb-4">
                     <Link 
                         to={`/${post.slug}`} 
                         activeClassName="border-orange-700 active"
                         onClick={this.props.onNavigation}
-                        className="p-4 flex flex-col md:flex-row-reverse w-full border-l-4 border-transparent hover:border-red-600">
-                            <div className="w-full md:w-2/4">
+                        className="p-4 w-full bg-white shadow flex flex-col md:mx-2 lg:mx-4 hover:shadow-md">
+                            <div className="w-full">
                                 {post.featured_media && post.featured_media.localFile &&
                                     <Img fluid={post.featured_media.localFile.childImageSharp.fluid} />
                                 }
                             </div>
-                            <div className="w-full md:w-2/4">
-                                <div className="pt-2 md:pt-0 md:px-4">
-                                    <span className="block text-xs md:text-sm">{post.date}</span>
+                            <div className="w-full">
+                                <div className="pt-2">
+                                    <span className="block text-xs md:text-sm text-orange-500">{post.date}</span>
                                     <span className="pacifico text-xl md:text-3xl">{post.title}</span>
                                 </div>
                             </div>
                     </Link>
-                </li>
+                </div>
             ));
 
-            const isCurrent = this.state.currentCategories.indexOf(index) !== -1;
-            const currentLiClasses = isCurrent ? 'border-orange-300 shadow' : '';
-            const currentSpanClasses = isCurrent ? 'bg-orange-200 hover:bg-orange-300' : '';
-
             return (
-                <li key={index} className={'my-6 border-orange-200 border hover:border-orange-300 hover:border-t-2 ' + currentLiClasses}>
-                    <span 
-                        onClick={(e) => this.setCurrentCategory(index, e)} 
-                        className={currentSpanClasses + ' p-2 xxx-pl-4 cursor-pointer block pacifico text-2xl md:text-3xl text-red-700'}>
+                <div key={index} className="mb-2">
+                    <span className="border-b-2 border-orange-200 block text-left md:mx-2 lg:mx-4 pacifico text-3xl md:text-4xl lg:text-5xl text-red-700 pt-0 pb-2 mb-4">
                         {group.category.name}
                     </span>
-                    {this.state.currentCategories.indexOf(index) !== -1 &&
-                        <ul className="m-0 list-none flex flex-wrap">
-                            {postList}
-                        </ul>
-                    }
-                </li>
+                    <div className="m-0 flex flex-wrap">
+                        {postList}
+                    </div>
+                </div>
             )
         });
     }

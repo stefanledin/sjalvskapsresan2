@@ -6,7 +6,7 @@ export default (props) => {
     const thumbnail = post.featured_media;
     return (
         <article className="shadow bg-white mb-6 mx-auto">
-            {thumbnail &&
+            {thumbnail && thumbnail.localFile &&
                 <Img fluid={thumbnail.localFile.childImageSharp.fluid} />
             }
             <div className="mx-auto py-4 lg:py-6 w-11/12 lg:w-9/12 xl:w-8/12">
