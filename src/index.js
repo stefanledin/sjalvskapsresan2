@@ -4,7 +4,6 @@ import clock from './images/iconmonstr-time-3.svg';
 import facebookIcon from './images/iconmonstr-facebook.svg';
 import Sidebar from './components/sidebar';
 import Counter from './components/counter';
-import Article from './components/article';
 import { Link } from "gatsby";
 
 const IndexPage = ( {data} ) => { 
@@ -72,7 +71,7 @@ export const pageQuery = graphql`
           featured_media {
             localFile {
               childImageSharp {
-                fluid(maxWidth: 1440) {
+                fluid(sizes: "(min-width: 1280px) 327px, (min-width: 768px) 39vw, 81vw") {
                   base64
                   aspectRatio
                   src
@@ -84,16 +83,6 @@ export const pageQuery = graphql`
                   originalName
                   presentationWidth
                   presentationHeight
-                }
-                fixed(width: 300) {
-                  aspectRatio
-                  base64
-                  height
-                  originalName
-                  src
-                  srcSet
-                  srcWebp
-                  width
                 }
               }
             }
@@ -114,23 +103,23 @@ export const pageQuery = graphql`
           sub_heading
         }
         featured_media {
-            localFile {
-                childImageSharp {
-                    fluid(maxWidth: 1440) {
-                        base64
-                        aspectRatio
-                        src
-                        srcSet
-                        srcWebp
-                        srcSetWebp
-                        sizes
-                        originalImg
-                        originalName
-                        presentationWidth
-                        presentationHeight
-                    }
-                }
+          localFile {
+            childImageSharp {
+              fluid(maxWidth: 1440) {
+                base64
+                aspectRatio
+                src
+                srcSet
+                srcWebp
+                srcSetWebp
+                sizes
+                originalImg
+                originalName
+                presentationWidth
+                presentationHeight
+              }
             }
+          }
         }
     }
   }
